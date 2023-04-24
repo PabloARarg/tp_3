@@ -58,12 +58,7 @@ extern "C" {
  * @brief Define un tipo de estuctura utilizada.
  * 
  */
-typedef struct alumno_s
-{
-   char apellido[FIELD_SIZE]; //!< Almacena el apellido
-   char nombre[FIELD_SIZE]; //!< Almacena el Nombre
-   uint32_t dni; //!< Almacena el dni
-} const * alumno_t;
+typedef struct alumno_s * alumno_t;
 
 /* === Public variable declarations ============================================================ */
 
@@ -77,7 +72,12 @@ typedef struct alumno_s
  * @return int
  * 
 */
-int Serializar(alumno_t alumno, char cadena[], uint32_t espacio);
+alumno_t CrearAlumno(char * apellido, char * nombre, int documento); //pasa parametros para crear un un alumno
+
+int GetCompleto(alumno_t alumno, char cadena[], uint32_t espacio); //obtiene el apellido y el nombre del alummno
+int GetDocmento(alumno_t alumno); //obteine eldocumento del alumno
+
+int Serializar(alumno_t alumno, char cadena[], uint32_t espacio);// serializa los datos obtenidos
 
 /* === End of documentation ==================================================================== */
 

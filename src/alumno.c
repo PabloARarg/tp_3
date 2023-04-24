@@ -29,18 +29,25 @@ SPDX-License-Identifier: MIT
 
 #include "alumno.h"
 #include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>// Booleanos
+#include <string.h>
+#define CANTIDAD_PERSONAS 5
 
 /* === Macros definitions ====================================================================== */
 
 /* === Private data type declarations ========================================================== */
+struct alumno_s 
+{
+   char apellido[FIELD_SIZE]; //!< Almacena el apellido
+   char nombre[FIELD_SIZE]; //!< Almacena el Nombre
+   uint32_t dni; //!< Almacena el dni
+   bool alocado; //!< Determina si esta ocupado en el arreglo de estructuras
+} ;
 
 /* === Private variable declarations =========================================================== */
 
 /* === Private function declarations =========================================================== */
-
-static int SerializarCadena();
-
-static int SerializarNumero();
 
 /* === Public variable definitions ============================================================= */
 
@@ -76,6 +83,54 @@ static int SerializarNumero(const char * campo, int valor, char * cadena, int es
 }
 
 /* === Public function implementation ========================================================== */
+//llena los campos de la estructura
+alumno_t CrearAlumno(char * apellido, char * nombre, int documento){
+   static struct alumno_s alumnos[CANTIDAD_PERSONAS];//define un arreglo de estructuras
+   int aux = 1;
+   while (aux < CANTIDAD_PERSONAS)
+      {
+         if (alumnos[aux].alocado == false)
+         {
+            strcpy(alumnos[aux].apellido, apellido);
+            strcpy(alumnos[aux].nombre, nombre);
+            alumnos[aux].dni = documento;
+            alumnos[aux].alocado = true;
+            break;
+         }
+         aux++;
+      }
+   printf("SUPEER termino la carga en el slot %d\n", aux);/////////////////////////////////////////////////////////////////////////////////////////////////////
+   return alumnos;
+//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+   // int i;
+   // for (i = 0; i < CANTIDAD_PERSONAS; i++)
+   // {
+   //    struct persona personaActual = alumnos[i];
+   //    printf("Nombre: %s. Edad: %d. Altura: %lf\n", personaActual.nombre, personaActual.edad, personaActual.altura);
+   // }
+//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+   // alumno_t resultado = malloc(sizeof(struct alumno_s));
+   // strcpy(resultado->apellido, apellido);
+   // strcpy(resultado->nombre, nombre);
+   // resultado->documento = documento;
+
+   // return resualtado;
+}
+// implementacion de la fn para obtener el apellido y el nombre del alumno
+int GetCompleto(alumno_t alumno, char cadena[], uint32_t espacio){
+   // char cadena[FIELD_SIZE];
+
+   snprintf(cadena, espacio, " ", alumno->nombre, alumno->apellido);
+   //deberia retornar null
+   return 0;
+}
+//implementacion de la fn para obtener el documento del alumno
+int GetDocumento(alumno_t alumno){
+   int aux;
+   aux = alumno->dni;
+    //deberia retornar null
+   return aux;
+}
 /**
  * @brief Llama a sub-funciones 
  * @see SerializarCadena() 

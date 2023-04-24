@@ -30,6 +30,7 @@ SPDX-License-Identifier: MIT
 
 #include "alumno.h"
 #include <stdio.h>
+#include <stdlib.h>
 
 /* === Macros definitions ====================================================================== */
 
@@ -53,22 +54,47 @@ SPDX-License-Identifier: MIT
  * @return int
  */
 int main(void){
-// pone los datos en flash
-   static struct alumno_s yo = {
-      .apellido = "Rivas",
-      .nombre = "Pablo",
-      .dni = 35933178,
-   };
-   //pone los datos en ram -> pila
-   // strncpy(yo.apellido, "Rivas", sizeof(yo.apellido)); 
-   // strncpy(yo.nombre, "Pablo", sizeof(yo.nombre));
-   char cadena[128];
+   alumno_t alumno_num; //almacena la direccion de memoria del primer elemento del arreglo de estructuras
+   char apellido_temp[20];
+   char nombre_temp[20];
+   int documento_temp;
+   char cadena[128]; //almacena provisoriamente el los datos en .json
+   while (1)
+   {
+      int opcion;
+      printf("\n1-> Crear un alumno\n2-> Mostrar alumnos\n3-> Salir\n: ");
+      scanf("%d",&opcion);
+      switch (opcion)
+      {
+      case 1:
+         // llena datos de alumnos
+         printf("Escribe el apellido:\n");
+         scanf("%s", apellido_temp);
+         printf("Escribe el nombre:\n");
+         scanf("%s", nombre_temp);
+         printf("Escribe el DNI:\n");
+         scanf("%d", &documento_temp);
+         alumno_num = CrearAlumno(apellido_temp, nombre_temp, documento_temp); //pasa parametros para crear un un alumno
+         break;
 
-   if (Serializar(&yo, cadena, sizeof(cadena)) >= 0) {
-      printf("%s\n", cadena);
-   }
-   else {
-      printf("Error al serializar\n");
+      case 2:
+         
+         if (Serializar(alumno_num, cadena, sizeof(cadena)) >= 0) {
+            printf("%s\n", cadena);
+         }
+         else {
+            printf("Error al serializar\n");
+         }
+         break;
+
+      case 3:
+         exit (-1);
+         break;
+      default:
+         printf("\n Intenta otra vez mostro!!! \n");
+         break;
+      }
+
    }
 
    return 0;

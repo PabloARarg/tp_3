@@ -153,3 +153,4 @@ $RECYCLE.BIN/
 ###############################################################################################
 # Todos los archivos que estan en bulid no se envian al repositorio
 build/**
+prueba/**

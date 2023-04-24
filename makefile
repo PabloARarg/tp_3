@@ -56,3 +56,6 @@ clean: $(BUILD_DIR)
 doc: $(DOC_DIR)
 	doxygen
 	open ./build/doc/html/index.html
+
+run: $(BUILD_DIR)
+	./build/bin/app.elf
