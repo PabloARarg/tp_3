@@ -52,7 +52,7 @@ extern "C" {
  * Este parametro define el tamaño de los campos de texto de la estrucctura alumno_t
 */
 #define FIELD_SIZE 50
-
+#define CANTIDAD_PERSONAS 5
 /* === Public data type declarations =========================================================== */
 /**
  * @brief Define un tipo de estuctura utilizada.
@@ -74,10 +74,12 @@ typedef struct alumno_s * alumno_t;
 */
 alumno_t CrearAlumno(char * apellido, char * nombre, int documento); //pasa parametros para crear un un alumno
 
+int Serializar(alumno_t alumno, char cadena[], uint32_t espacio);// serializa los datos obtenidos
+
+alumno_t GetEstructura(alumno_t alumno, int alumno_posicion);// debuelve el puntero del alumno generado en forma estatica
+
 int GetCompleto(alumno_t alumno, char cadena[], uint32_t espacio); //obtiene el apellido y el nombre del alummno
 int GetDocmento(alumno_t alumno); //obteine eldocumento del alumno
-
-int Serializar(alumno_t alumno, char cadena[], uint32_t espacio);// serializa los datos obtenidos
 
 /* === End of documentation ==================================================================== */
 

@@ -59,10 +59,11 @@ int main(void){
    char nombre_temp[20];
    int documento_temp;
    char cadena[128]; //almacena provisoriamente el los datos en .json
+   int i = 0;
    while (1)
    {
       int opcion;
-      printf("\n1-> Crear un alumno\n2-> Mostrar alumnos\n3-> Salir\n: ");
+      printf("\n1-> Crear un alumno\n2-> Mostrar alumnos\n3-> Eliminar alumno\n4-> Salir\n<- ");
       scanf("%d",&opcion);
       switch (opcion)
       {
@@ -78,17 +79,26 @@ int main(void){
          break;
 
       case 2:
-         
-         if (Serializar(alumno_num, cadena, sizeof(cadena)) >= 0) {
-            printf("%s\n", cadena);
+         printf("primer elemento %p\n\n", alumno_num);
+         while (i < CANTIDAD_PERSONAS)
+         {
+            if (GetEstructura(alumno_num, i) != alumno_num)
+            {
+               if (Serializar(GetEstructura(alumno_num, i), cadena, sizeof(cadena)) >= 0) {
+                  printf("%s\n", cadena);
+               }
+               else {
+                  printf("Error al serializar\n");
+               }
+            }
+            
+            i++;
          }
-         else {
-            printf("Error al serializar\n");
-         }
+         i = 0;
          break;
 
-      case 3:
-         exit (-1);
+      case 4:
+         exit (0);
          break;
       default:
          printf("\n Intenta otra vez mostro!!! \n");

@@ -46,8 +46,8 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(OBJ_DIR)
 	gcc -c $< -o $@
 # Comprobacion por terminal y compila
 all: $(OBJ_FILES) $(BIN_DIR)
-	echo $(SRC_FILES)
-	echo $(OBJ_FILES)
+#	echo $(SRC_FILES)
+#	echo $(OBJ_FILES)
 	gcc -o $(BIN_DIR)/app.elf $(OBJ_FILES)
 
 clean: $(BUILD_DIR)

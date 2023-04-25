@@ -32,7 +32,6 @@ SPDX-License-Identifier: MIT
 #include <stdlib.h>
 #include <stdbool.h>// Booleanos
 #include <string.h>
-#define CANTIDAD_PERSONAS 5
 
 /* === Macros definitions ====================================================================== */
 
@@ -85,8 +84,8 @@ static int SerializarNumero(const char * campo, int valor, char * cadena, int es
 /* === Public function implementation ========================================================== */
 //llena los campos de la estructura
 alumno_t CrearAlumno(char * apellido, char * nombre, int documento){
-   static struct alumno_s alumnos[CANTIDAD_PERSONAS];//define un arreglo de estructuras
-   int aux = 1;
+   static struct alumno_s alumnos[CANTIDAD_PERSONAS] = {0};//define un arreglo de estructuras
+   int aux = 2;
    while (aux < CANTIDAD_PERSONAS)
       {
          if (alumnos[aux].alocado == false)
@@ -95,19 +94,12 @@ alumno_t CrearAlumno(char * apellido, char * nombre, int documento){
             strcpy(alumnos[aux].nombre, nombre);
             alumnos[aux].dni = documento;
             alumnos[aux].alocado = true;
+            printf("SUPEER se guardo la direccion del slot %d\n", aux);/////////////////////////////////////////////////////////////////////////////////////////////////////
             break;
          }
          aux++;
       }
-   printf("SUPEER termino la carga en el slot %d\n", aux);/////////////////////////////////////////////////////////////////////////////////////////////////////
-   return alumnos;
-//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-   // int i;
-   // for (i = 0; i < CANTIDAD_PERSONAS; i++)
-   // {
-   //    struct persona personaActual = alumnos[i];
-   //    printf("Nombre: %s. Edad: %d. Altura: %lf\n", personaActual.nombre, personaActual.edad, personaActual.altura);
-   // }
+   return &alumnos[1];
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
    // alumno_t resultado = malloc(sizeof(struct alumno_s));
    // strcpy(resultado->apellido, apellido);
@@ -147,11 +139,17 @@ int GetDocumento(alumno_t alumno){
 int Serializar(alumno_t alumno, char cadena[], uint32_t espacio){
    int resultado;
    int disponible = espacio;
+   
+   // int i = 0;
+   // alumno_t alumno;
+   // printf("\napellido es %s\n el nombre es %s\ndni es %d\n", alumno->apellido, alumno->nombre, alumno->dni);
+   // printf("%p %p\n", alumno, alumno_root);
+   // alumno = &alumno_root[i];
 
    cadena[0] = '{';
    cadena++;
    disponible--;
-
+   
    resultado = SerializarCadena("apellido", alumno->apellido, cadena, disponible);
    if(resultado > 0) {
       disponible -= resultado;
@@ -170,6 +168,21 @@ int Serializar(alumno_t alumno, char cadena[], uint32_t espacio){
    }
 
    return resultado;
+}
+
+// debuelve el puntero del alumno generado en forma estatica en alguna posicion
+
+alumno_t GetEstructura(alumno_t alumno, int alumno_posicion){
+   alumno_t aux;
+      if (alumno[alumno_posicion].alocado == 1)
+      {
+         aux = &alumno[alumno_posicion];
+      }
+      else
+      {
+         aux = alumno;
+      }      
+   return aux;
 }
 
 /* === End of documentation ==================================================================== */
