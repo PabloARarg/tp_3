@@ -41,7 +41,7 @@ struct alumno_s
    char apellido[FIELD_SIZE]; //!< Almacena el apellido
    char nombre[FIELD_SIZE]; //!< Almacena el Nombre
    uint32_t dni; //!< Almacena el dni
-   bool alocado; //!< Determina si esta ocupado en el arreglo de estructuras
+   int alocado; //!< Determina si esta ocupado en el arreglo de estructuras
 } ;
 
 /* === Private variable declarations =========================================================== */
@@ -84,29 +84,36 @@ static int SerializarNumero(const char * campo, int valor, char * cadena, int es
 /* === Public function implementation ========================================================== */
 //llena los campos de la estructura
 alumno_t CrearAlumno(char * apellido, char * nombre, int documento){
-   static struct alumno_s alumnos[CANTIDAD_PERSONAS] = {0};//define un arreglo de estructuras
-   int aux = 2;
-   while (aux < CANTIDAD_PERSONAS)
-      {
-         if (alumnos[aux].alocado == false)
-         {
-            strcpy(alumnos[aux].apellido, apellido);
-            strcpy(alumnos[aux].nombre, nombre);
-            alumnos[aux].dni = documento;
-            alumnos[aux].alocado = true;
-            printf("SUPEER se guardo la direccion del slot %d\n", aux);/////////////////////////////////////////////////////////////////////////////////////////////////////
-            break;
-         }
-         aux++;
-      }
-   return &alumnos[1];
-//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-   // alumno_t resultado = malloc(sizeof(struct alumno_s));
-   // strcpy(resultado->apellido, apellido);
-   // strcpy(resultado->nombre, nombre);
-   // resultado->documento = documento;
+alumno_t resultado;
+//#if MODO_CREACION == estatica
 
-   // return resualtado;
+   // static struct alumno_s alumnos[CANTIDAD_PERSONAS] = {0};//define un arreglo de estructuras
+   // int aux = 2;
+   // while (aux < CANTIDAD_PERSONAS)
+   //    {
+   //       if (alumnos[aux].alocado == false)
+   //       {
+   //          strcpy(alumnos[aux].apellido, apellido);
+   //          strcpy(alumnos[aux].nombre, nombre);
+   //          alumnos[aux].dni = documento;
+   //          alumnos[aux].alocado = true;
+   //          printf("SUPEER!!! se guardo la direccion del slot %d\n", aux-1);/////////////////////////////////////////////////////////////////////////////////////////////////////
+   //          break;
+   //       }
+   //       aux++;
+   //    }
+   // resultado = &alumnos[1];
+
+//#else
+   resultado = malloc(sizeof(struct alumno_s));
+   strcpy(resultado->apellido, apellido);
+   strcpy(resultado->nombre, nombre);
+   resultado->dni = documento;
+   resultado->alocado = 2;
+   printf("SUPEER!!! se creo un alumno de forma dinamica \n");
+
+//#endif
+   return resultado;
 }
 // implementacion de la fn para obtener el apellido y el nombre del alumno
 int GetCompleto(alumno_t alumno, char cadena[], uint32_t espacio){
@@ -172,19 +179,32 @@ int Serializar(alumno_t alumno, char cadena[], uint32_t espacio){
 
 // debuelve el puntero del alumno generado en forma estatica en alguna posicion
 
-alumno_t GetEstructura(alumno_t alumno, int alumno_posicion){
+alumno_t GetEstructura(alumno_t alumno, int alumno_posicion, int *estado){
    alumno_t aux;
       if (alumno[alumno_posicion].alocado == 1)
       {
          aux = &alumno[alumno_posicion];
+         *estado = 1;
       }
+      else if (alumno[alumno_posicion].alocado == 2)
+      {
+         aux = alumno;
+         *estado = 2;
+      }
+      
       else
       {
          aux = alumno;
+         *estado = 0;
       }      
    return aux;
 }
 
+int  EliminarAlumno(alumno_t alumno, int alumno_posicion){
+   alumno[alumno_posicion].alocado = false;
+   printf("SUPEER!!! se elimino el slot %d\n", alumno_posicion);/////////////////////////////////////////////////////////////////////////////////////////////////////
+   return 0;
+}
 /* === End of documentation ==================================================================== */
 
 /** @} End of module definition for doxygen */

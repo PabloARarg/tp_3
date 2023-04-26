@@ -54,12 +54,12 @@ SPDX-License-Identifier: MIT
  * @return int
  */
 int main(void){
-   alumno_t alumno_num; //almacena la direccion de memoria del primer elemento del arreglo de estructuras
+   alumno_t alumno_num = 0; //almacena la direccion de memoria del primer elemento del arreglo de estructuras
    char apellido_temp[20];
    char nombre_temp[20];
-   int documento_temp;
    char cadena[128]; //almacena provisoriamente el los datos en .json
    int i = 0;
+   int estado = 0;
    while (1)
    {
       int opcion;
@@ -74,27 +74,38 @@ int main(void){
          printf("Escribe el nombre:\n");
          scanf("%s", nombre_temp);
          printf("Escribe el DNI:\n");
-         scanf("%d", &documento_temp);
-         alumno_num = CrearAlumno(apellido_temp, nombre_temp, documento_temp); //pasa parametros para crear un un alumno
+         scanf("%d", &i);
+         alumno_num = CrearAlumno(apellido_temp, nombre_temp, i); //pasa parametros para crear un un alumno
          break;
 
       case 2:
-         printf("primer elemento %p\n\n", alumno_num);
+         i = 0;
          while (i < CANTIDAD_PERSONAS)
          {
-            if (GetEstructura(alumno_num, i) != alumno_num)
+            GetEstructura(alumno_num, i, &estado);
+            if (estado > 0)
             {
-               if (Serializar(GetEstructura(alumno_num, i), cadena, sizeof(cadena)) >= 0) {
+               printf("slot %d -> ", i);
+               if (Serializar(GetEstructura(alumno_num, i, &estado), cadena, sizeof(cadena)) >= 0) {
                   printf("%s\n", cadena);
                }
                else {
                   printf("Error al serializar\n");
                }
-            }
-            
+            }            
             i++;
-         }
-         i = 0;
+         }        
+         break;
+
+      case 3:
+      i = 0;
+      GetEstructura(alumno_num, i, &estado);
+      if (estado != 2)
+      {
+         printf("Cual es el slot que ocupa?\n<- ");
+         scanf("%d", &i);
+         EliminarAlumno(alumno_num, i);
+      }
          break;
 
       case 4:

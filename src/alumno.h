@@ -53,6 +53,7 @@ extern "C" {
 */
 #define FIELD_SIZE 50
 #define CANTIDAD_PERSONAS 5
+#define MODO_CREACION estati // estatica o cualquier otra cosa para que sea dinamica
 /* === Public data type declarations =========================================================== */
 /**
  * @brief Define un tipo de estuctura utilizada.
@@ -76,12 +77,11 @@ alumno_t CrearAlumno(char * apellido, char * nombre, int documento); //pasa para
 
 int Serializar(alumno_t alumno, char cadena[], uint32_t espacio);// serializa los datos obtenidos
 
-alumno_t GetEstructura(alumno_t alumno, int alumno_posicion);// debuelve el puntero del alumno generado en forma estatica
+alumno_t GetEstructura(alumno_t alumno, int alumno_posicion, int *estado);// debuelve el puntero del alumno generado en forma estatica
 
-int GetCompleto(alumno_t alumno, char cadena[], uint32_t espacio); //obtiene el apellido y el nombre del alummno
-int GetDocmento(alumno_t alumno); //obteine eldocumento del alumno
+int  EliminarAlumno(alumno_t alumno, int alumno_posicion);// elimina un alumno 
 
-/* === End of documentation ==================================================================== */
+ /* === End of documentation ==================================================================== */
 
 #ifdef __cplusplus
 }
