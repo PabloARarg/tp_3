@@ -85,34 +85,36 @@ static int SerializarNumero(const char * campo, int valor, char * cadena, int es
 //llena los campos de la estructura
 alumno_t CrearAlumno(char * apellido, char * nombre, int documento){
 alumno_t resultado;
-//#if MODO_CREACION == estatica
+#if (MODO_CREACION==1)
 
-   // static struct alumno_s alumnos[CANTIDAD_PERSONAS] = {0};//define un arreglo de estructuras
-   // int aux = 2;
-   // while (aux < CANTIDAD_PERSONAS)
-   //    {
-   //       if (alumnos[aux].alocado == false)
-   //       {
-   //          strcpy(alumnos[aux].apellido, apellido);
-   //          strcpy(alumnos[aux].nombre, nombre);
-   //          alumnos[aux].dni = documento;
-   //          alumnos[aux].alocado = true;
-   //          printf("SUPEER!!! se guardo la direccion del slot %d\n", aux-1);/////////////////////////////////////////////////////////////////////////////////////////////////////
-   //          break;
-   //       }
-   //       aux++;
-   //    }
-   // resultado = &alumnos[1];
+   static struct alumno_s alumnos[CANTIDAD_PERSONAS] = {0};//define un arreglo de estructuras
+   int aux = 2;
+   while (aux < CANTIDAD_PERSONAS)
+      {
+         if (alumnos[aux].alocado == false)
+         {
+            strcpy(alumnos[aux].apellido, apellido);
+            strcpy(alumnos[aux].nombre, nombre);
+            alumnos[aux].dni = documento;
+            alumnos[aux].alocado = true;
+            printf("SUPEER!!! se guardo la direccion del slot %d\n", aux-1);/////////////////////////////////////////////////////////////////////////////////////////////////////
+            break;
+         }
+         aux++;
+      }
+   resultado = &alumnos[1];
 
-//#else
+#else
+   alumno_t alumnos_p[CANTIDAD_PERSONAS] = {0};
    resultado = malloc(sizeof(struct alumno_s));
    strcpy(resultado->apellido, apellido);
    strcpy(resultado->nombre, nombre);
    resultado->dni = documento;
    resultado->alocado = 2;
    printf("SUPEER!!! se creo un alumno de forma dinamica \n");
+   aux
 
-//#endif
+#endif
    return resultado;
 }
 // implementacion de la fn para obtener el apellido y el nombre del alumno

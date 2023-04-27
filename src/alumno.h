@@ -53,7 +53,7 @@ extern "C" {
 */
 #define FIELD_SIZE 50
 #define CANTIDAD_PERSONAS 5
-#define MODO_CREACION estati // estatica o cualquier otra cosa para que sea dinamica
+#define MODO_CREACION 1 // 1 para estatica o cualquier otra cosa para que sea dinamica
 /* === Public data type declarations =========================================================== */
 /**
  * @brief Define un tipo de estuctura utilizada.

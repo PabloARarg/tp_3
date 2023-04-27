@@ -3,5 +3,5 @@
         "stdbool.h": "c",
         "stdlib.h": "c"
     },
-    "C_Cpp.dimInactiveRegions": true
+    "C_Cpp.dimInactiveRegions": false
 }
