@@ -87,7 +87,7 @@ alumno_t CrearAlumno(char * apellido, char * nombre, int documento){
 alumno_t resultado;
 #if (MODO_CREACION==1)
 
-   static struct alumno_s alumnos[CANTIDAD_PERSONAS] = {0};//define un arreglo de estructuras
+   static struct alumno_s alumnos[CANTIDAD_PERSONAS] = {0}; //define un arreglo de estructuras
    int aux = 2;
    while (aux < CANTIDAD_PERSONAS)
       {
@@ -97,7 +97,7 @@ alumno_t resultado;
             strcpy(alumnos[aux].nombre, nombre);
             alumnos[aux].dni = documento;
             alumnos[aux].alocado = true;
-            printf("SUPEER!!! se guardo la direccion del slot %d\n", aux-1);/////////////////////////////////////////////////////////////////////////////////////////////////////
+            printf("SUPEER!!! se guardo la direccion del slot %d\n", aux-1);
             break;
          }
          aux++;
@@ -119,10 +119,8 @@ alumno_t resultado;
 }
 // implementacion de la fn para obtener el apellido y el nombre del alumno
 int GetCompleto(alumno_t alumno, char cadena[], uint32_t espacio){
-   // char cadena[FIELD_SIZE];
 
    snprintf(cadena, espacio, " ", alumno->nombre, alumno->apellido);
-   //deberia retornar null
    return 0;
 }
 //implementacion de la fn para obtener el documento del alumno
@@ -204,7 +202,7 @@ alumno_t GetEstructura(alumno_t alumno, int alumno_posicion, int *estado){
 
 int  EliminarAlumno(alumno_t alumno, int alumno_posicion){
    alumno[alumno_posicion].alocado = false;
-   printf("SUPEER!!! se elimino el slot %d\n", alumno_posicion);/////////////////////////////////////////////////////////////////////////////////////////////////////
+   printf("SUPEER!!! se elimino el slot %d\n", alumno_posicion);
    return 0;
 }
 /* === End of documentation ==================================================================== */

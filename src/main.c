@@ -48,18 +48,20 @@ SPDX-License-Identifier: MIT
 
 /* === Public function implementation ========================================================== */
 /**
- * @brief Crea una estructura estatic con valores de tipo alumno_s y llama a la fucion serializar.
+ * @brief Crea un menu ppara ingresar datos del alumno  y llama a la fucion CrearAlumno y serializar.
  * 
- * Muestra por el termina los datos del alumno en formato .json o un aviso de error si no se pudo ejecutar la funcion correctamente.
+ * Muestra por el termina los datos del alumno en formato .json o un aviso de error si no se pudo ejecutar la funcion correctamente. 
+ *
  * @return int
  */
 int main(void){
-   alumno_t alumno_num = 0; //almacena la direccion de memoria del primer elemento del arreglo de estructuras
+   alumno_t alumno_num = 0; //!<almacena la direccion de memoria del primer elemento del arreglo de estructuras
    char apellido_temp[20];
    char nombre_temp[20];
-   char cadena[128]; //almacena provisoriamente el los datos en .json
+   char cadena[128]; //!<almacena provisoriamente el los datos en .json
    int i = 0;
    int estado = 0;
+   //ingresa al menu
    while (1)
    {
       int opcion;
@@ -68,7 +70,7 @@ int main(void){
       switch (opcion)
       {
       case 1:
-         // llena datos de alumnos
+// llena datos de alumnos y crea un alumno
          printf("Escribe el apellido:\n");
          scanf("%s", apellido_temp);
          printf("Escribe el nombre:\n");
@@ -77,7 +79,7 @@ int main(void){
          scanf("%d", &i);
          alumno_num = CrearAlumno(apellido_temp, nombre_temp, i); //pasa parametros para crear un un alumno
          break;
-
+// muestra los datos del alumno
       case 2:
          i = 0;
          while (i < CANTIDAD_PERSONAS)
@@ -96,7 +98,7 @@ int main(void){
             i++;
          }        
          break;
-
+// elimana a un alumno
       case 3:
       i = 0;
       GetEstructura(alumno_num, i, &estado);
@@ -107,10 +109,11 @@ int main(void){
          EliminarAlumno(alumno_num, i);
       }
          break;
-
+// sale del programa
       case 4:
          exit (0);
          break;
+// muestra un mensaje para una opcion no valida
       default:
          printf("\n Intenta otra vez mostro!!! \n");
          break;

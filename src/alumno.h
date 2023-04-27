@@ -51,9 +51,9 @@ extern "C" {
  * 
  * Este parametro define el tamaño de los campos de texto de la estrucctura alumno_t
 */
-#define FIELD_SIZE 50
-#define CANTIDAD_PERSONAS 5
-#define MODO_CREACION 1 // 1 para estatica o cualquier otra cosa para que sea dinamica
+#define FIELD_SIZE 50//!<parametro para cadenas
+#define CANTIDAD_PERSONAS 5//!<parametro para determinar el numero de personas
+#define MODO_CREACION 1 //! 1 para estatica o cualquier otra cosa para que sea dinamica
 /* === Public data type declarations =========================================================== */
 /**
  * @brief Define un tipo de estuctura utilizada.
@@ -65,6 +65,15 @@ typedef struct alumno_s * alumno_t;
 
 /* === Public function declarations ============================================================ */
 /**
+ * @brief Crea un alumno
+ * 
+ * @param apellido envia un puntero de la cadena apellido
+ * @param nombre  envia un puntero de la cadena del nombre
+ * @param documento envia un entero
+ * @return alumno_t regresa un puntero a la estructura creada
+ */
+alumno_t CrearAlumno(char * apellido, char * nombre, int documento); //pasa parametros para crear un un alumno
+/**
  * @brief Encadena el nombre, el apellido y el dni  en un formato tipo .json
  * 
  * @param alumno Envia un puntero al incio de la estructura
@@ -73,13 +82,26 @@ typedef struct alumno_s * alumno_t;
  * @return int
  * 
 */
-alumno_t CrearAlumno(char * apellido, char * nombre, int documento); //pasa parametros para crear un un alumno
-
 int Serializar(alumno_t alumno, char cadena[], uint32_t espacio);// serializa los datos obtenidos
-
-alumno_t GetEstructura(alumno_t alumno, int alumno_posicion, int *estado);// debuelve el puntero del alumno generado en forma estatica
-
-int  EliminarAlumno(alumno_t alumno, int alumno_posicion);// elimina un alumno 
+/**
+ * @brief Get the Estructura object
+ * 
+ * Debuelve el puntero del alumno generado en forma estatica
+ *  
+ * @param alumno envia el puntero del primer alumno
+ * @param alumno_posicion envia la posicion del alumno que se quiere obtener
+ * @param estado envia un puntero a un entero para usar determinar si la estructura tiene algun alumno
+ * @return alumno_t debuelve el puntero solicitado al alumno(estructura)
+ */
+alumno_t GetEstructura(alumno_t alumno, int alumno_posicion, int *estado);
+/**
+ * @brief elimina un alumno 
+ * 
+ * @param alumno envia un puntero a la estuctura a eliminar
+ * @param alumno_posicion envia la posicion del alumno a eliminar
+ * @return int retorna un entero sin importancia
+ */
+int  EliminarAlumno(alumno_t alumno, int alumno_posicion);
 
  /* === End of documentation ==================================================================== */
 
